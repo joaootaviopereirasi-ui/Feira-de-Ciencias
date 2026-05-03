@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PEVI — Plataforma Especializada em Vagas Inclusivas</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --verde: #1D9E75;
+    --verde-claro: #E1F5EE;
+    --verde-escuro: #085041;
+    --verde-medio: #0F6E56;
+    --azul: #378ADD;
+    --azul-claro: #E6F1FB;
+    --roxo: #7F77DD;
+    --roxo-claro: #EEEDFE;
+    --amarelo: #EF9F27;
+    --amarelo-claro: #FAEEDA;
+    --coral: #D85A30;
+    --cinza-f: #F7F6F2;
+    --cinza-texto: #2C2C2A;
+    --cinza-muted: #888780;
+    --branco: #ffffff;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cinza-f);
+    color: var(--cinza-texto);
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(29,158,117,0.15);
+    padding: 0 2rem;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 64px;
+  }
+  .nav-logo {
+    font-family: 'Sora', sans-serif;
+    font-weight: 800;
+    font-size: 1.25rem;
+    color: var(--verde-escuro);
+    letter-spacing: -0.02em;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .nav-logo .badge {
+    background: var(--verde);
+    color: #fff;
+    font-size: 0.6rem;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 4px;
+    letter-spacing: 0.05em;
+  }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--cinza-muted);
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--verde); }
+  .nav-cta {
+    background: var(--verde);
+    color: #fff;
+    font-size: 0.875rem;
+    font-weight: 600;
+    padding: 0.5rem 1.25rem;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: background 0.2s;
+  }
+  .nav-cta:hover { background: var(--verde-medio); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    text-align: center;
+    padding: 8rem 2rem 4rem;
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 0%, rgba(29,158,117,0.12) 0%, transparent 70%),
+      var(--cinza-f);
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -120px; right: -120px;
+    width: 500px; height: 500px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(29,158,117,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -80px; left: -80px;
+    width: 350px; height: 350px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(127,119,221,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--verde-claro);
+    color: var(--verde-escuro);
+    font-size: 0.78rem;
+    font-weight: 600;
+    padding: 6px 14px;
+    border-radius: 100px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+  }
+  .hero-eyebrow .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--verde); }
+  .hero h1 {
+    font-family: 'Sora', sans-serif;
+    font-size: clamp(2.5rem, 7vw, 5rem);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    color: var(--verde-escuro);
+    max-width: 860px;
+    margin-bottom: 1.5rem;
+  }
+  .hero h1 span { color: var(--verde); }
+  .hero p {
+    font-size: 1.125rem;
+    color: var(--cinza-muted);
+    max-width: 560px;
+    margin-bottom: 2.5rem;
+    font-weight: 300;
+  }
+  .hero-buttons { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; }
+  .btn-primary {
+    background: var(--verde);
+    color: #fff;
+    font-weight: 600;
+    padding: 0.875rem 2rem;
+    border-radius: 10px;
+    text-decoration: none;
+    font-size: 1rem;
+    transition: all 0.2s;
+    border: none; cursor: pointer;
+  }
+  .btn-primary:hover { background: var(--verde-medio); transform: translateY(-1px); }
+  .btn-secondary {
+    background: transparent;
+    color: var(--verde-escuro);
+    font-weight: 600;
+    padding: 0.875rem 2rem;
+    border-radius: 10px;
+    text-decoration: none;
+    font-size: 1rem;
+    border: 1.5px solid rgba(8,80,65,0.25);
+    transition: all 0.2s;
+  }
+  .btn-secondary:hover { border-color: var(--verde); color: var(--verde); }
+  .hero-stats {
+    display: flex; gap: 3rem; margin-top: 4rem;
+    flex-wrap: wrap; justify-content: center;
+  }
+  .stat { text-align: center; }
+  .stat strong {
+    display: block;
+    font-family: 'Sora', sans-serif;
+    font-size: 2rem; font-weight: 800;
+    color: var(--verde-escuro);
+  }
+  .stat span { font-size: 0.875rem; color: var(--cinza-muted); }
+
+  /* SECTIONS */
+  section { padding: 6rem 2rem; }
+  .container { max-width: 1100px; margin: 0 auto; }
+  .section-label {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 0.78rem; font-weight: 600; letter-spacing: 0.07em;
+    text-transform: uppercase; color: var(--verde); margin-bottom: 1rem;
+  }
+  .section-label::before {
+    content: ''; display: block;
+    width: 20px; height: 2px; background: var(--verde); border-radius: 2px;
+  }
+  h2 {
+    font-family: 'Sora', sans-serif;
+    font-size: clamp(1.75rem, 4vw, 2.75rem);
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    color: var(--verde-escuro);
+    margin-bottom: 1rem;
+  }
+  .subtitle { font-size: 1.05rem; color: var(--cinza-muted); max-width: 560px; font-weight: 300; }
+
+  /* PROBLEMA */
+  .problema { background: var(--verde-escuro); color: #fff; }
+  .problema .section-label { color: #9FE1CB; }
+  .problema .section-label::before { background: #9FE1CB; }
+  .problema h2 { color: #fff; }
+  .problema .subtitle { color: rgba(255,255,255,0.65); max-width: 700px; }
+  .problema-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-top: 3rem;
+  }
+  .problema-card {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 16px;
+    padding: 1.75rem;
+  }
+  .problema-card .icon {
+    width: 48px; height: 48px; border-radius: 12px;
+    background: rgba(29,158,117,0.3);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  .problema-card h3 {
+    font-family: 'Sora', sans-serif;
+    font-size: 1rem; font-weight: 600;
+    color: #fff; margin-bottom: 0.5rem;
+  }
+  .problema-card p { font-size: 0.9rem; color: rgba(255,255,255,0.65); line-height: 1.6; }
+
+  /* OBJETIVO */
+  .objetivo { background: var(--branco); }
+  .objetivo-layout {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; margin-top: 3rem;
+  }
+  .objetivo-card {
+    background: var(--verde-claro);
+    border-radius: 20px;
+    padding: 2rem;
+    border: 1px solid rgba(29,158,117,0.2);
+  }
+  .objetivo-card h3 {
+    font-family: 'Sora', sans-serif;
+    font-size: 1.4rem; font-weight: 700;
+    color: var(--verde-escuro); margin-bottom: 0.75rem;
+  }
+  .objetivo-card p { color: var(--verde-medio); font-size: 0.95rem; }
+  .objetivo-list { list-style: none; display: flex; flex-direction: column; gap: 1rem; }
+  .objetivo-list li {
+    display: flex; gap: 12px; align-items: flex-start;
+    font-size: 0.95rem; color: var(--cinza-texto);
+  }
+  .objetivo-list li::before {
+    content: '✓';
+    min-width: 24px; height: 24px;
+    background: var(--verde);
+    color: #fff;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.75rem; font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  /* PUBLICO */
+  .publico { background: var(--cinza-f); }
+  .publico-cards {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem; margin-top: 3rem;
+  }
+  .pub-card {
+    background: var(--branco);
+    border-radius: 20px;
+    padding: 2rem;
+    border: 1px solid rgba(0,0,0,0.07);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .pub-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,0.08); }
+  .pub-icon {
+    width: 56px; height: 56px; border-radius: 16px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.75rem; margin-bottom: 1.25rem;
+  }
+  .pub-card h3 {
+    font-family: 'Sora', sans-serif;
+    font-size: 1.1rem; font-weight: 700;
+    color: var(--cinza-texto); margin-bottom: 0.5rem;
+  }
+  .pub-card p { font-size: 0.875rem; color: var(--cinza-muted); }
+
+  /* METODO */
+  .metodo { background: var(--branco); }
+  .steps { display: flex; flex-direction: column; gap: 0; margin-top: 3rem; position: relative; }
+  .steps::before {
+    content: '';
+    position: absolute; left: 28px; top: 0; bottom: 0;
+    width: 2px; background: var(--verde-claro);
+  }
+  .step {
+    display: flex; gap: 2rem; align-items: flex-start;
+    padding: 0 0 2.5rem;
+    position: relative;
+  }
+  .step-num {
+    min-width: 56px; height: 56px;
+    background: var(--verde);
+    color: #fff;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Sora', sans-serif;
+    font-size: 1.25rem; font-weight: 800;
+    flex-shrink: 0;
+    position: relative; z-index: 1;
+    border: 3px solid var(--branco);
+  }
+  .step-body h3 {
+    font-family: 'Sora', sans-serif;
+    font-size: 1.1rem; font-weight: 700;
+    color: var(--verde-escuro); margin-bottom: 0.5rem;
+    padding-top: 0.75rem;
+  }
+  .step-body p { font-size: 0.9rem; color: var(--cinza-muted); }
+  .step-body ul { margin-top: 0.75rem; padding-left: 1.25rem; }
+  .step-body ul li { font-size: 0.875rem; color: var(--cinza-muted); margin-bottom: 0.4rem; }
+
+  /* FUNCIONALIDADES */
+  .funcionalidades { background: var(--cinza-f); }
+  .func-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem; margin-top: 3rem;
+  }
+  .func-card {
+    background: var(--branco);
+    border-radius: 20px;
+    padding: 1.75rem;
+    border: 1px solid rgba(0,0,0,0.06);
+    transition: transform 0.2s;
+  }
+  .func-card:hover { transform: translateY(-3px); }
+  .func-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 0.72rem; font-weight: 600;
+    letter-spacing: 0.04em; text-transform: uppercase;
+    padding: 4px 10px; border-radius: 100px;
+    margin-bottom: 1rem;
+  }
+  .func-card .icon { font-size: 1.75rem; margin-bottom: 0.75rem; }
+  .func-card h3 {
+    font-family: 'Sora', sans-serif;
+    font-size: 1rem; font-weight: 700;
+    color: var(--cinza-texto); margin-bottom: 0.5rem;
+  }
+  .func-card p { font-size: 0.875rem; color: var(--cinza-muted); line-height: 1.6; }
+
+  /* PAINEL EMPRESA */
+  .painel { background: var(--verde-escuro); }
+  .painel .section-label { color: #9FE1CB; }
+  .painel .section-label::before { background: #9FE1CB; }
+  .painel h2 { color: #fff; }
+  .painel .subtitle { color: rgba(255,255,255,0.65); }
+  .painel-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.25rem; margin-top: 3rem;
+  }
+  .painel-item {
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 16px; padding: 1.5rem;
+  }
+  .painel-item .p-icon {
+    width: 44px; height: 44px; border-radius: 10px;
+    background: rgba(29,158,117,0.35);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.35rem; margin-bottom: 1rem;
+  }
+  .painel-item h3 {
+    font-family: 'Sora', sans-serif;
+    font-size: 0.95rem; font-weight: 600;
+    color: #fff; margin-bottom: 0.4rem;
+  }
+  .painel-item p { font-size: 0.825rem; color: rgba(255,255,255,0.6); line-height: 1.55; }
+
+  /* LEGISLACAO */
+  .legislacao { background: var(--branco); }
+  .lei-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 1.5rem; margin-top: 3rem;
+  }
+  .lei-card {
+    border-radius: 16px; padding: 1.75rem;
+    border-left: 4px solid;
+  }
+  .lei-card.verde { background: var(--verde-claro); border-color: var(--verde); }
+  .lei-card.roxo { background: var(--roxo-claro); border-color: var(--roxo); }
+  .lei-card.amarelo { background: var(--amarelo-claro); border-color: var(--amarelo); }
+  .lei-card.azul { background: var(--azul-claro); border-color: var(--azul); }
+  .lei-tag {
+    display: inline-block;
+    font-size: 0.7rem; font-weight: 700; letter-spacing: 0.06em;
+    text-transform: uppercase; padding: 3px 8px; border-radius: 4px;
+    margin-bottom: 0.75rem;
+  }
+  .lei-card.verde .lei-tag { background: var(--verde); color: #fff; }
+  .lei-card.roxo .lei-tag { background: var(--roxo); color: #fff; }
+  .lei-card.amarelo .lei-tag { background: var(--amarelo); color: #fff; }
+  .lei-card.azul .lei-tag { background: var(--azul); color: #fff; }
+  .lei-card h3 {
+    font-family: 'Sora', sans-serif;
+    font-size: 1rem; font-weight: 700;
+    color: var(--verde-escuro); margin-bottom: 0.5rem;
+  }
+  .lei-card.roxo h3 { color: #3C3489; }
+  .lei-card.amarelo h3 { color: #633806; }
+  .lei-card.azul h3 { color: #0C447C; }
+  .lei-card p { font-size: 0.875rem; line-height: 1.6; color: #444; }
+
+  /* CTA */
+  .cta-section {
+    background: linear-gradient(135deg, var(--verde) 0%, var(--verde-escuro) 100%);
+    text-align: center; padding: 6rem 2rem;
+  }
+  .cta-section h2 { color: #fff; margin-bottom: 1rem; }
+  .cta-section p { color: rgba(255,255,255,0.75); max-width: 500px; margin: 0 auto 2.5rem; }
+  .cta-section .btn-primary { background: #fff; color: var(--verde-escuro); }
+  .cta-section .btn-primary:hover { background: rgba(255,255,255,0.92); }
+
+  /* FOOTER */
+  footer {
+    background: var(--cinza-texto);
+    color: rgba(255,255,255,0.6);
+    text-align: center;
+    padding: 2rem;
+    font-size: 0.875rem;
+  }
+  footer strong { color: #fff; }
+
+  /* RESPONSIVE */
+  @media (max-width: 720px) {
+    .problema-grid, .objetivo-layout, .lei-grid { grid-template-columns: 1fr; }
+    .nav-links { display: none; }
+    .hero-stats { gap: 1.5rem; }
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .hero-eyebrow { animation: fadeUp 0.6s ease both; }
+  .hero h1 { animation: fadeUp 0.6s 0.1s ease both; }
+  .hero p { animation: fadeUp 0.6s 0.2s ease both; }
+  .hero-buttons { animation: fadeUp 0.6s 0.3s ease both; }
+  .hero-stats { animation: fadeUp 0.6s 0.4s ease both; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    PEVI <span class="badge">2026</span>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#problema">Problema</a></li>
+    <li><a href="#objetivo">Objetivo</a></li>
+    <li><a href="#funcionalidades">Funcionalidades</a></li>
+    <li><a href="#painel">Para Empresas</a></li>
+    <li><a href="#legislacao">Legislação</a></li>
+  </ul>
+  <a href="#cta" class="nav-cta">Saiba Mais</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <span class="hero-eyebrow"><span class="dot"></span>Mostra do Conhecimento 2026</span>
+  <h1>Inclusão real no <span>mercado de trabalho</span></h1>
+  <p>A PEVI conecta pessoas com deficiência e neurodivergentes a empresas preparadas, com tecnologia acessível e humanidade em cada etapa.</p>
+  <div class="hero-buttons">
+    <a href="#objetivo" class="btn-primary">Conhecer a plataforma</a>
+    <a href="#funcionalidades" class="btn-secondary">Ver funcionalidades</a>
+  </div>
+  <div class="hero-stats">
+    <div class="stat"><strong>3</strong><span>Públicos atendidos</span></div>
+    <div class="stat"><strong>WCAG</strong><span>Padrão internacional</span></div>
+    <div class="stat"><strong>Lei nº 8.213</strong><span>Cumprimento humanizado</span></div>
+  </div>
+</section>
+
+<!-- PROBLEMA -->
+<section class="problema" id="problema">
+  <div class="container">
+    <span class="section-label">O Problema</span>
+    <h2>O abismo que precisamos superar</h2>
+    <p class="subtitle">Empresas precisam contratar PCDs, candidatos qualificados existem — mas os processos tradicionais excluem antes mesmo da entrevista.</p>
+    <div class="problema-grid">
+      <div class="problema-card">
+        <div class="icon">🚫</div>
+        <h3>Plataformas não acessíveis</h3>
+        <p>Os sites de vagas atuais foram projetados sem considerar as necessidades de quem tem deficiência intelectual, motora ou neurodivergência.</p>
+      </div>
+      <div class="problema-card">
+        <div class="icon">📋</div>
+        <h3>Entrevistas padronizadas</h3>
+        <p>Processos seletivos tradicionais ignoram as particularidades de candidatos com deficiência, gerando exclusão estrutural logo nas primeiras fases.</p>
+      </div>
+      <div class="problema-card">
+        <div class="icon">🔄</div>
+        <h3>Alta rotatividade</h3>
+        <p>O turnover elevado ocorre porque empresas contratam sem preparo para acolher e integrar — resultando em demissões rápidas e frustração mútua.</p>
+      </div>
+      <div class="problema-card">
+        <div class="icon">⚖️</div>
+        <h3>Cotas sem humanidade</h3>
+        <p>Muitas contratações são feitas apenas para cumprir a Lei de Cotas, sem real inclusão ou adaptação do ambiente de trabalho ao colaborador.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- OBJETIVO -->
+<section class="objetivo" id="objetivo">
+  <div class="container">
+    <span class="section-label">Solução</span>
+    <h2>Uma plataforma feita para quem mais importa</h2>
+    <p class="subtitle">Enquanto a maioria dos sites é feita para o RH, o PEVI é feito para o candidato — e orienta as empresas para uma inclusão real.</p>
+    <div class="objetivo-layout">
+      <div>
+        <div class="objetivo-card" style="margin-bottom: 1.5rem;">
+          <h3>Porto seguro do candidato</h3>
+          <p>O candidato aprende a se portar e entende seus direitos antes mesmo de chegar na empresa — com linguagem simples e recursos de acessibilidade.</p>
+        </div>
+        <div class="objetivo-card" style="background: var(--roxo-claro); border-color: rgba(127,119,221,0.25);">
+          <h3 style="color: #3C3489;">RH Consultivo</h3>
+          <p style="color: #534AB7;">Guia completo para que os profissionais de RH saibam acolher, integrar e adaptar o ambiente — cumprindo cotas de forma ética e humanizada.</p>
+        </div>
+      </div>
+      <ul class="objetivo-list">
+        <li>Conectar PCDs e neurodivergentes ao mercado com equidade</li>
+        <li>Criar guia consultivo para o RH sobre acolhimento e integração</li>
+        <li>Facilitar o cumprimento da Lei de Cotas de forma assertiva e humanizada</li>
+        <li>Eliminar barreiras tecnológicas nos processos seletivos</li>
+        <li>Preparar candidatos com orientações claras sobre seus direitos</li>
+        <li>Preparar empresas para adaptar postos de trabalho adequadamente</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- PÚBLICO-ALVO -->
+<section class="publico" id="publico">
+  <div class="container">
+    <span class="section-label">Público-Alvo</span>
+    <h2>Para quem o PEVI foi construído</h2>
+    <p class="subtitle">Três grupos, uma plataforma unificada — cada um com sua jornada desenhada com cuidado.</p>
+    <div class="publico-cards">
+      <div class="pub-card">
+        <div class="pub-icon" style="background: var(--verde-claro);">♿</div>
+        <h3>Pessoas com Deficiência (PCDs)</h3>
+        <p>Candidatos que precisam de ferramentas acessíveis, linguagem simples e orientações claras para navegar o mercado de trabalho com confiança.</p>
+      </div>
+      <div class="pub-card">
+        <div class="pub-icon" style="background: var(--roxo-claro);">🧠</div>
+        <h3>Neurodivergentes</h3>
+        <p>Pessoas com autismo, TDAH, dislexia e outras condições que precisam de ambientes estruturados, baixo estímulo sensorial e processos previsíveis.</p>
+      </div>
+      <div class="pub-card">
+        <div class="pub-icon" style="background: var(--azul-claro);">👔</div>
+        <h3>Profissionais de RH e Gestores</h3>
+        <p>Empresas que precisam cumprir a Lei de Cotas e desejam fazê-lo de forma genuinamente inclusiva, com orientação técnica e ética.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MÉTODO -->
+<section class="metodo" id="metodo">
+  <div class="container">
+    <span class="section-label">Método</span>
+    <h2>Como o PEVI foi construído</h2>
+    <p class="subtitle">Legislação trabalhista unida à tecnologia assistiva — cada etapa pensada para garantir que a inclusão seja real.</p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <h3>Pesquisa e Diagnóstico</h3>
+          <p>Estudo aprofundado da Lei nº 8.213/91 (Lei de Cotas) para compreender obrigações legais e direitos dos PCDs. Análise das falhas nos processos de RH atuais.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <h3>Levantamento de Requisitos</h3>
+          <p>Mapeamento das necessidades reais de cada público:</p>
+          <ul>
+            <li><strong>Candidatos:</strong> leitores de tela, linguagem simples, currículo em vídeo</li>
+            <li><strong>Empresas (RH):</strong> orientação técnica sobre capacitismo e adaptação de postos de trabalho</li>
+          </ul>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <h3>Arquitetura da Informação</h3>
+          <p>Planejamento do esqueleto do site com quatro áreas principais: Home, Área do Candidato, Área da Empresa e Portal de Conhecimento.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <h3>Design de Interface Acessível</h3>
+          <p>Aplicação das diretrizes WCAG (Web Content Accessibility Guidelines) — interface fácil de usar para quem tem dificuldades cognitivas ou motoras.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">5</div>
+        <div class="step-body">
+          <h3>Segurança e LGPD</h3>
+          <p>Definição de como dados sensíveis (laudos médicos) serão protegidos conforme a Lei Geral de Proteção de Dados, garantindo privacidade total ao candidato.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">6</div>
+        <div class="step-body">
+          <h3>Prototipagem e Validação</h3>
+          <p>Criação do protótipo visual e desenvolvimento dos guias de comportamento do "RH Consultivo" — o grande diferencial do projeto.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FUNCIONALIDADES -->
+<section class="funcionalidades" id="funcionalidades">
+  <div class="container">
+    <span class="section-label">Funcionalidades</span>
+    <h2>Tecnologia a serviço da inclusão</h2>
+    <p class="subtitle">Cada recurso foi pensado para eliminar uma barreira real no processo de candidatura.</p>
+    <div class="func-grid">
+      <div class="func-card">
+        <span class="func-badge" style="background: var(--verde-claro); color: var(--verde-escuro);">Acessibilidade</span>
+        <div class="icon">🤟</div>
+        <h3>Avatar de Libras</h3>
+        <p>Assistente virtual que traduz textos para a Língua Brasileira de Sinais em tempo real, garantindo acesso pleno para candidatos surdos.</p>
+      </div>
+      <div class="func-card">
+        <span class="func-badge" style="background: var(--azul-claro); color: #0C447C;">Acessibilidade</span>
+        <div class="icon">🔊</div>
+        <h3>Leitura em Áudio (TTS)</h3>
+        <p>Botão de "Play" em cada descrição de vaga. Ajuda quem tem dislexia ou dificuldades de processamento visual a acessar o conteúdo.</p>
+      </div>
+      <div class="func-card">
+        <span class="func-badge" style="background: var(--roxo-claro); color: #3C3489;">Candidatos</span>
+        <div class="icon">🎥</div>
+        <h3>Vídeo-Currículo e Vídeo-Vaga</h3>
+        <p>Sem precisar ler, o candidato assiste a um vídeo da empresa mostrando o local de trabalho — reduzindo a ansiedade do neurodivergente.</p>
+      </div>
+      <div class="func-card">
+        <span class="func-badge" style="background: var(--amarelo-claro); color: #633806;">Usabilidade</span>
+        <div class="icon">💬</div>
+        <h3>Linguagem Simples</h3>
+        <p>Sem jargões de RH: "Turnover" vira "Troca de funcionários", "Soft Skills" vira "Habilidades pessoais", "Compliance" vira "Regras da empresa".</p>
+      </div>
+      <div class="func-card">
+        <span class="func-badge" style="background: var(--verde-claro); color: var(--verde-escuro);">Foco</span>
+        <div class="icon">🎯</div>
+        <h3>Modo de Foco</h3>
+        <p>Função que esconde tudo que não é essencial na tela, deixando apenas o texto da vaga — ideal para candidatos com TDAH ou dificuldades de atenção.</p>
+      </div>
+      <div class="func-card">
+        <span class="func-badge" style="background: var(--azul-claro); color: #0C447C;">Design</span>
+        <div class="icon">✨</div>
+        <h3>Design Clean</h3>
+        <p>Sem banners piscando, sem anúncios e sem popups. Interface limpa que reduz o ruído visual e cognitivo para todos os usuários.</p>
+      </div>
+      <div class="func-card">
+        <span class="func-badge" style="background: var(--roxo-claro); color: #3C3489;">Braille</span>
+        <div class="icon">⠿</div>
+        <h3>Suporte a Braille</h3>
+        <p>Compatibilidade com leitores de tela e dispositivos Braille para candidatos com deficiência visual, seguindo padrões WCAG internacionais.</p>
+      </div>
+      <div class="func-card">
+        <span class="func-badge" style="background: var(--amarelo-claro); color: #633806;">Segurança</span>
+        <div class="icon">🔒</div>
+        <h3>Proteção de Dados LGPD</h3>
+        <p>Laudos médicos e informações sensíveis protegidos com máxima segurança, em total conformidade com a Lei Geral de Proteção de Dados.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PAINEL EMPRESA -->
+<section class="painel" id="painel">
+  <div class="container">
+    <span class="section-label">Para Empresas</span>
+    <h2>Painel de Gestão para o RH</h2>
+    <p class="subtitle">Ferramentas que orientam a empresa a contratar e integrar com responsabilidade e eficácia.</p>
+    <div class="painel-grid">
+      <div class="painel-item">
+        <div class="p-icon">🔍</div>
+        <h3>Filtro de Acomodação</h3>
+        <p>Busque candidatos que se adaptam melhor ao ambiente da empresa — vagas para ambientes silenciosos, Braille, e outros perfis de acessibilidade.</p>
+      </div>
+      <div class="painel-item">
+        <div class="p-icon">⚖️</div>
+        <h3>Canal de Dúvidas Jurídicas</h3>
+        <p>FAQ completo sobre o que pode ou não ser perguntado no exame admissional, garantindo ética e conformidade com a LGPD.</p>
+      </div>
+      <div class="painel-item">
+        <div class="p-icon">📝</div>
+        <h3>Instruções de Entrevista Adaptada</h3>
+        <p>Guias práticos sobre como conduzir entrevistas inclusivas, sem capacitismo e respeitando as particularidades de cada candidato.</p>
+      </div>
+      <div class="painel-item">
+        <div class="p-icon">📚</div>
+        <h3>RH Consultivo</h3>
+        <p>Guia completo de comportamento e boas práticas para acolher e integrar novos colaboradores PCDs e neurodivergentes.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LEGISLAÇÃO -->
+<section class="legislacao" id="legislacao">
+  <div class="container">
+    <span class="section-label">Base Legal</span>
+    <h2>Fundamentos que sustentam o projeto</h2>
+    <p class="subtitle">O PEVI é construído sobre uma base legal sólida, garantindo conformidade e direitos para todos.</p>
+    <div class="lei-grid">
+      <div class="lei-card verde">
+        <span class="lei-tag">Lei nº 8.213/91</span>
+        <h3>Lei de Cotas</h3>
+        <p>Define as obrigações legais das empresas na contratação de pessoas com deficiência. O PEVI facilita o cumprimento de forma assertiva e humanizada, indo além do número mínimo exigido.</p>
+      </div>
+      <div class="lei-card roxo">
+        <span class="lei-tag">WCAG</span>
+        <h3>Diretrizes de Acessibilidade</h3>
+        <p>Web Content Accessibility Guidelines — padrão internacional aplicado em toda a interface do PEVI, garantindo que o site funcione para pessoas com deficiências visuais, motoras e cognitivas.</p>
+      </div>
+      <div class="lei-card amarelo">
+        <span class="lei-tag">LGPD</span>
+        <h3>Proteção de Dados</h3>
+        <p>Lei Geral de Proteção de Dados — todos os dados sensíveis dos candidatos, incluindo laudos médicos, são tratados e protegidos conforme os princípios da LGPD.</p>
+      </div>
+      <div class="lei-card azul">
+        <span class="lei-tag">Ética</span>
+        <h3>Combate ao Capacitismo</h3>
+        <p>Orientação técnica constante ao RH para evitar práticas capacitistas, garantindo que o processo seletivo e o ambiente de trabalho sejam genuinamente inclusivos.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="cta">
+  <div class="container">
+    <h2>Inclusão que vai além das cotas</h2>
+    <p>O PEVI é o porto seguro onde candidatos encontram oportunidades e empresas encontram talentos — com tecnologia, respeito e equidade.</p>
+    <a href="#objetivo" class="btn-primary">Conheça o projeto completo</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p><strong>PEVI</strong> — Plataforma Especializada em Vagas Inclusivas &nbsp;|&nbsp; Mostra do Conhecimento 2026</p>
+  <p style="margin-top: 0.5rem; font-size: 0.78rem;">Desenvolvido com foco em acessibilidade, equidade e tecnologia assistiva.</p>
+</footer>
+
+</body>
+</html>
